@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- https://mymth.github.io/vanillajs-datepicker/#/?id=using-from-browser -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bs5.min.css">
+
+    <!-- https://github.com/jaredreich/notie -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+
+    <link rel="stylesheet" type="text/css" href="./static/css/styles.css">
+
+    <style>
+        p {
+            color: #653030;
+        }
+
+        p {
+            color: green;
+        }
+    </style>
+
+    <title>Make reservation</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Rooms
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/room1.html">Room #1</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/room2.html">Room #2</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/make-reservation.html">Book Now</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contacts.html">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"> </div>
+        <div class="col-md-6">
+            <h1 class="mt-4">Search for Availability...</h1>
+            <form action="" method="POST" novalidate class="needs-validation">
+                <div class="row" id="reservation-dates">
+                    <div class="col">
+                        <label for="start_date" class="form-label">Starting Date</label>
+                        <input required type="text" class="form-control" id="start_date" name="start_date" aria-describedby="startDateHelp">
+                        <div id="start_date_help" class="form-text">What is the starting date?</div>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please inform the date...</div>
+                    </div>
+                    <div class="col">
+                        <label for="end_date" class="form-label">Ending Date</label>
+                        <input required type="text" class="form-control" id="end_date" name="end_date" aria-describedby="end_date_help">
+                        <div id="end_date_help" class="form-text">What is the ending date?</div>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please inform the date...</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Search Availability</button>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <p id="myParagraph">Teste</p>
+            <p>
+                <button id="colorButton" type="button" class="btn btn-primary">Click me</button>
+            </p>
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="row my-footer">
+    <div class="col">
+        left
+    </div>
+    <div class="col">
+        middle
+    </div>
+    <div class="col">
+        right
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+<script src="https://unpkg.com/notie"></script>
+<!-- https://sweetalert2.github.io/#download -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    let attention = Prompt();
+
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+
+    const elem = document.getElementById('reservation-dates');
+    const rangepicker = new DateRangePicker(elem, {
+        format: "dd/mm/yyyy"
+    });
+
+
+    function notify(msg, msgType) {
+        notie.alert(
+            {
+                type: msgType,
+                text: msg,
+            }
+        )
+    }
+
+    function notifyModal(title, text, icon, confirmationButtonText) {
+        Swal.fire({
+            title: title,
+            html: text,
+            icon: icon,
+            confirmButtonText: confirmationButtonText
+        })
+    }
+
+    document.getElementById("colorButton").addEventListener("click", function () {
+        //notify("teste", "warning")
+        //notifyModal("titulo", "text <b>asd</b>o", "success", "botao")
+
+        //attention.toast({msg: "teste"})
+        //attention.error({msg: "teste", title: "título"})
+
+        let html = `
+            <form id="check-availability-form" action="" method="POST" novalidate class="needs-validation">
+                    <div class="row" id="reservation-dates-modal">
+                        <div class="col">
+                            <label for="start_date" class="form-label">Starting Date</label>
+                            <input required type="text" class="form-control" id="start_date_modal" name="start_date" aria-describedby="startDateHelp">
+                            <div id="start_date_modal_help" class="form-text">What is the starting date?</div>
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please inform the date...</div>
+                        </div>
+                        <div class="col">
+                            <label for="end_date" class="form-label">Ending Date</label>
+                            <input required type="text" class="form-control" id="end_date_modal" name="end_date" aria-describedby="end_date_help">
+                            <div id="end_date_modal_help" class="form-text">What is the ending date?</div>
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please inform the date...</div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Search Availability</button>
+                </form>
+        `
+
+        attention.custom({msg: html, title: "Choose your dates..."})
+
+    })
+
+    function Prompt() {
+        let toast = function(c) {
+            // inicializa as variávels com valores default caso não exista em c
+            const {
+                msg = "",
+                icon = "success",
+                position = "top-end",
+            } = c;
+
+            const Toast = Swal.mixin({
+                toast: true,
+                title: msg,
+                position: position,
+                showConfirmButton: false,
+                timer: 3000,
+                icon: icon,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({})
+        }
+
+        let success = function(c) {
+            // inicializa as variávels com valores default caso não exista em c
+            const {
+                msg = "",
+                title = "",
+                footer = "",
+            } = c;
+
+
+            Swal.fire({
+                icon: 'succes',
+                title: title,
+                text: msg,
+                footer: footer,
+            })
+        }
+
+        let error = function(c) {
+            // inicializa as variávels com valores default caso não exista em c
+            const {
+                msg = "",
+                title = "",
+                footer = "",
+            } = c;
+
+
+            Swal.fire({
+                icon: 'error',
+                title: title,
+                text: msg,
+                footer: footer,
+            })
+        }
+
+        let custom =  async function(c) {
+            const {
+                msg = "",
+                title = "",
+            } = c;
+
+            const { value: formValues } = await Swal.fire({
+                title: title,
+                html: msg,
+                backdrop: false,
+                focusConfirm: false,
+                showCancelButton: true,
+                willOpen: () => {
+                    const elem = document.getElementById('reservation-dates-modal');
+                    const rangepicker2 = new DateRangePicker(elem, {
+                        format: "dd/mm/yyyy",
+                        showOnFocus: false,
+                    });
+                },
+                preConfirm: () => {
+                    return [
+                        document.getElementById('start_date_modal').value,
+                        document.getElementById('end_date_modal').value
+                    ]
+                }
+            })
+
+            if (formValues) {
+                Swal.fire(JSON.stringify(formValues))
+            }
+        }
+
+
+        return {
+            toast: toast,
+            success: success,
+            error: error,
+            custom: custom,
+        }
+    }
+</script>
+
+</body>
+</html>
